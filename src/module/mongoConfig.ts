@@ -1,0 +1,17 @@
+import { Injectable } from '@nestjs/common';
+import { ConfigService } from '@nestjs/config';
+import { MongooseModuleOptions,MongooseOptionsFactory } from '@nestjs/mongoose';
+
+@Injectable()
+export class MongoConfig implements MongooseOptionsFactory{
+  constructor(private config:ConfigService){}
+
+  createMongooseOptions(): MongooseModuleOptions {
+    const mongo :MongooseModuleOptions = {
+      uri:this.config.get<string>('AWS'), 
+      dbName:this.config.get<string>('DBNAME'), 
+      
+    }
+    return mongo
+  }    
+}
