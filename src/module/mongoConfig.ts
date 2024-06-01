@@ -8,9 +8,8 @@ export class MongoConfig implements MongooseOptionsFactory{
 
   createMongooseOptions(): MongooseModuleOptions {
     const mongo :MongooseModuleOptions = {
-      uri:this.config.get<string>('AWS'), 
-      dbName:this.config.get<string>('DBNAME'), 
-      
+      uri:this.config.get<string>('MONGODB_URL'), 
+      dbName:this.config.get<string>('DBNAME'),
     }
     return mongo
   }    

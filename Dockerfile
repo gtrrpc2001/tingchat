@@ -1,9 +1,8 @@
 FROM node:18-alpine
-
-RUN mkdir -p /app
 WORKDIR /app
-
-ADD . /app/
+COPY package*.json ./
 RUN npm install --production
-EXPOSE 4500
-ENTRYPOINT npm run start:prod
+RUN npm install pm2 -g
+COPY . .
+EXPOSE 4501
+ENTRYPOINT ["pm2-runtime", "ecosystem.config.js"]

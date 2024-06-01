@@ -2,18 +2,18 @@ import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import  { Model, ObjectId, UpdateWriteOpResult} from 'mongoose';
 import { ChatDto } from 'src/dto/chat.dto';
-import { Ecg } from 'src/schema/chatSchema';
+import { Chat } from 'src/schema/chat.schema';
 
 @Injectable()
 export class ChatService {
   constructor(
-    @InjectModel(Ecg.name) private ecgModel: Model<Ecg>,        
+    @InjectModel(Chat.name) private chatModel: Model<Chat>,        
   ){}  
 
-  async create(ecg:ChatDto): Promise<Ecg>{
+  async create(chat:ChatDto): Promise<Chat>{
     try{     
       
-      return await this.ecgModel.create(ecg)
+      return await this.chatModel.create(chat)
       // const createdEcg = new this.ecgModel(ecg);          
       // return await createdEcg.save();
     }catch(E){
@@ -22,36 +22,36 @@ export class ChatService {
     }    
   }
 
-  async findAll():Promise<Ecg[]>{
+  async findAll():Promise<Chat[]>{
     // mongoose.model(Ecg.name,EcgSchema,'realtimeEcg')
-    return await this.ecgModel.find().exec()
+    return await this.chatModel.find().exec()
   }
 
-  async findMany(eq:string,startDate:string,endDate:string):Promise<Ecg[]>{
-    return await this.ecgModel.find({
-      eq:eq,
+  async findMany(roomId:string,startDate:string,endDate:string):Promise<Chat[]>{
+    return await this.chatModel.find({
+      roomId:roomId,
       writetime:{
       $gte:startDate,
       $lt:endDate
     }})
   }
 
-  async findOne(eq:string):Promise<Ecg>{
-    return await this.ecgModel.findOne({eq});
+  async findOne(roomId:string):Promise<Chat>{
+    return await this.chatModel.findOne({roomId});
   }
 
-  async findOneAndUpdate(ecg:ChatDto):Promise<Ecg>{    
-    const updatedEcg = await this.ecgModel.findOneAndUpdate({eq:ecg.eq},{$set:{writetime:ecg.writetime}},{new:true})
-    return updatedEcg
+  async findOneAndUpdate(body:ChatDto):Promise<Chat>{    
+    const updatedChat = await this.chatModel.findOneAndUpdate({roomId:body.roomId},{$set:{writetime:body.writetime}},{new:true})
+    return updatedChat
   }
 
-  async updateMany(ecg:ChatDto):Promise<UpdateWriteOpResult>{    
-    const updatedEcg = await this.ecgModel.updateMany({eq:ecg.eq},{$set:{writetime:ecg.writetime}},{new:true})
-    return updatedEcg
+  async updateMany(body:ChatDto):Promise<UpdateWriteOpResult>{    
+    const updatedChat = await this.chatModel.updateMany({roomId:body.roomId},{$set:{writetime:body.writetime}},{new:true})
+    return updatedChat
   }
 
-  async delete(ecg:ChatDto):Promise<{deletedCount: number}>{    
-    const deletedEcg = await this.ecgModel.deleteMany({eq:ecg.eq}).exec();
-    return deletedEcg
+  async delete(body:ChatDto):Promise<{deletedCount: number}>{    
+    const deletedChat = await this.chatModel.deleteMany({roomId:body.roomId}).exec();
+    return deletedChat
   }
 }

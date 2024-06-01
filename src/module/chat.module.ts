@@ -2,17 +2,21 @@ import { Module } from '@nestjs/common';
 import { ChatController } from 'src/controller/chat.controller';
 import { ChatService } from 'src/service/chat.service';
 import { MongooseModule } from '@nestjs/mongoose';
-import { Ecg, EcgSchema } from 'src/schema/chatSchema';
+import { Chat, ChatSchema } from 'src/schema/chat.schema';
 import { ChatWebsocket } from 'src/service/chat.websocket';
+import { RoomService } from 'src/service/room.service';
+import { TypeOrmModule } from '@nestjs/typeorm';
+import { RoomEntity } from 'src/entity/room.entity';
 
 
 
 @Module({
   imports: [    
-    MongooseModule.forFeature([{name:Ecg.name,schema:EcgSchema}]),          
+    MongooseModule.forFeature([{name:Chat.name,schema:ChatSchema}]),  
+    TypeOrmModule.forFeature([RoomEntity])        
 ],
   controllers: [ChatController],  
-  providers: [ChatService,ChatWebsocket],
+  providers: [ChatService,ChatWebsocket,RoomService],
 })
 
 export class ChatModule{}

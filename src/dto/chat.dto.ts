@@ -2,8 +2,8 @@ import { IsArray, IsNumber, IsOptional, IsString } from 'class-validator';
 
 export class ChatDto{
     
-    @IsString()
-    eq: string;
+    @IsNumber()
+    roomId: number;
     
     @IsString()    
     @IsOptional()
@@ -11,14 +11,13 @@ export class ChatDto{
     
     @IsString()    
     @IsOptional()
-    timezone:string;
+    writer_id:string;
 
-    @IsNumber()
+    @IsString()
     @IsOptional()
-    bpm:number;
-
+    text:number;
     
     @IsArray()   
     @IsOptional() 
-    ecgpacket:number[];
+    file:number[];
 }
