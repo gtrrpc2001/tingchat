@@ -8,7 +8,7 @@ export class RoomEntity {
   roomId: number;
 
   @Column({ type: 'varchar' })
-  name: string;
+  title: string;
 
   @Column({ type: 'varchar' })
   decription: string;

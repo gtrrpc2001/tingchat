@@ -7,13 +7,14 @@ import { ChatWebsocket } from 'src/service/chat.websocket';
 import { RoomService } from 'src/service/room.service';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { RoomEntity } from 'src/entity/room.entity';
+import { RoomMemberEntity } from 'src/entity/room_member.entity';
 
 
 
 @Module({
   imports: [    
     MongooseModule.forFeature([{name:Chat.name,schema:ChatSchema}]),  
-    TypeOrmModule.forFeature([RoomEntity])        
+    TypeOrmModule.forFeature([RoomEntity,RoomMemberEntity])        
 ],
   controllers: [ChatController],  
   providers: [ChatService,ChatWebsocket,RoomService],

@@ -2,13 +2,19 @@ import { ApiProperty } from '@nestjs/swagger';
 import { IsNumber, IsOptional, IsString } from 'class-validator';
 
 export class RoomDTO {
+
+  @IsString()
+  @IsOptional()
+  @ApiProperty({ type: String, description: '' })
+  readonly kind: string;
+
   @IsString()
   @ApiProperty({ type:Number, description: '' })
   readonly roomId: number;
 
   @IsString()  
   @ApiProperty({ type: String, description: '' })
-  readonly name: string;
+  readonly title: string;
 
   @IsString()
   @IsOptional()
